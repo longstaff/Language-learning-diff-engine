@@ -1,4 +1,4 @@
-(function(){
+require(['jquery', './model/diff_model'], function($, DiffModel) {
 
 	var diffs = [];
 	var index = 0;
@@ -295,4 +295,5 @@
 		}
 	}
 
-})();
+
+});
