@@ -14,7 +14,7 @@ define(function(){
 		}
 	}
 	BaseModel.prototype.emitEvent = function(){
-		for(var ii; ii<this._listeners.length; ii++){
+		for(var ii=0; ii<this._listeners.length; ii++){
 			this._listeners[ii](this);
 		}
 	}

@@ -129,10 +129,10 @@ textarea {
 .diff_span--unsure{
     color:orange;
 }
-.diff_span--lookedup{
+.diff_span--lookup{
     color:red;
 }
-.diff_span--removed{
+.diff_span--remove{
     color:grey;
     opacity: 0.3;
 }
