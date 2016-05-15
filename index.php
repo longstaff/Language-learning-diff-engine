@@ -1,3 +1,15 @@
+<?php
+// See: http://blog.ircmaxell.com/2013/02/preventing-csrf-attacks.html
+
+// Start a session (which should use cookies over HTTP only).
+session_start();
+
+// Create a new CSRF token.
+if (! isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = base64_encode(openssl_random_pseudo_bytes(32));
+}
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -20,15 +32,13 @@
         <header>
         </header>
 
-        <section class="page">
+        <section class="page" data-hook="page">
 
-            <dif class="menu" data-hook="menu"></dif>
-
-            <dif class="diff" data-hook="diff-view" data-id="one" data-editing="editing"></dif>
-
-            <dif class="diff" data-hook="diff-view" data-id="two"></dif>
+            <div class="diff" data-hook="add-view"></div>
 
         </section>
+
+        <input type="hidden" data-hook="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>" />
 
         <script src="js/require.js" data-main="js/main"></script>
     </body>

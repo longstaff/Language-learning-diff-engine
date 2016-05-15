@@ -1,35 +1,34 @@
 define(['diff', '../constants/constants'], function(JsDiff, Constants){
 	
-	function AddingController(diffModel, dataLoader){
-		this._diffModel = diffModel;
+	function NewController(dataLoader){
 		this._dataLoader = dataLoader;
 	}
 
-	AddingController.prototype.setInput = function(diffInput){
+	NewController.prototype.setInput = function(diffInput){
 		this._$diffInput = diffInput;
 		this._diffTarget = this._$diffInput.val();
 	}
 
-	AddingController.prototype.addLookedUpHandler = function(ev){
+	NewController.prototype.addLookedUpHandler = function(ev){
 		ev.preventDefault();
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_LOOKUP);
 		this.resetTarget();
 	}
-	AddingController.prototype.addUnsureHandler = function(ev){
+	NewController.prototype.addUnsureHandler = function(ev){
 		ev.preventDefault();
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_SURE);
 		this.resetTarget();
 	}
-	AddingController.prototype.addSureHandler = function(ev){
+	NewController.prototype.addSureHandler = function(ev){
 		ev.preventDefault();
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_UNSURE);
 		this.resetTarget();
 	}
 
-	AddingController.prototype.addKeyboardNavHandler = function(ev){
+	NewController.prototype.addKeyboardNavHandler = function(ev){
 	    ev.preventDefault();
 
 		switch(ev.which) {
@@ -45,18 +44,10 @@ define(['diff', '../constants/constants'], function(JsDiff, Constants){
 	    }
 	}
 
-	AddingController.prototype.saveHandler = function(){
-		$.when(this._dataLoader.addDiffs(this._diffModel.getId(), this._diffModel.getDiffs())).done(function(data){
-			$(this).trigger(Constants.EVENT_SAVE);
-		}.bind(this)).fail(function(){
-
-		}.bind(this));
-	}
-
-	AddingController.prototype.resetTarget = function(){
+	NewController.prototype.resetTarget = function(){
 		this._diffTarget = this._$diffInput.val();
 	}
 
-	return AddingController;
+	return NewController;
 
 });

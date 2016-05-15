@@ -1,52 +1,67 @@
-require(['jquery', './model/diff_model', './controllers/adding_controller', './views/adding_view', './controllers/timeline_controller', './views/timeline_view'], function($, DiffModel, AddingController, AddingView, TimelineController, TimelineView) {
+require(['jquery', './constants/constants', './model/data_loader', './model/diff_model', './controllers/adding_controller', './views/adding_view', './controllers/timeline_controller', './views/timeline_view'], function($, Constants, DataLoader, DiffModel, AddingController, AddingView, TimelineController, TimelineView) {
 	
-	var dataStore = {
-		'one':{
-			string:'this is a string'
-		},
-		'two':{
-			string:'this is a string',
-			diffArr: [{"type":"added","diff":[{"value":"this is a ","start":0,"end":10}]},{"diff":[{"count":7,"value":"this is a string"},{"count":4,"added":true,"value":" with changes"}],"type":"sure"},{"diff":[{"count":2,"value":"this "},{"count":4,"removed":true,"value":"is a "},{"count":5,"value":"string with changes"}],"type":"unsure"},{"diff":[{"count":2,"value":"this "},{"count":1,"removed":true,"value":"string"},{"count":1,"added":true,"value":"sentance"},{"count":4,"value":" with changes"}],"type":"unsure"},{"diff":[{"count":2,"value":"this "},{"count":2,"added":true,"value":"a "},{"count":5,"value":"sentance with changes"}],"type":"lookup"},{"diff":[{"count":6,"value":"this a sentance "},{"count":1,"removed":true,"value":"with"},{"count":1,"added":true,"value":"that"},{"count":1,"value":" "},{"count":2,"added":true,"value":"had "},{"count":1,"value":"changes"}],"type":"sure"}]
+	var token = $('[data-hook=csrf_token]');
+	var dataLoader = new DataLoader(token.val());
+	token.remove();
+
+	$.when(dataLoader.getDataIds()).done(function(data){
+
+		for(var ii=0; ii<data.length; ii++){
+
+			(function scopeCapture(){
+			
+				var dataId = data[ii];
+				var $ele = $('<div class="diff" data-hook="diff-view" data-id="'+dataId+'"></div>')
+				$('[data-hook=page]').append($ele);
+
+				$.when(dataLoader.getData(dataId)).done(function(data){
+
+					console.log($ele);
+
+					var editing = data.diffs ? false : true;
+					var diffModel = new DiffModel(data);
+
+					if (editing) {
+						renderEdit($ele, diffModel);
+					}
+					else {
+						renderStatic($ele, diffModel);
+					}
+
+				}.bind(this)).fail(function(){
+					console.log("ERROR, no data found for "+dataId)
+					$(this).remove();
+				}.bind(this));
+				
+			})();
 		}
-	}
 
-	$('[data-hook=diff-view]').each(function(){
-		var dataId = $(this).data('id');
-		var data = dataStore[dataId];
-		var editing = $(this).data('editing') ? true : false;
-
-		console.log(dataId, data);
-
-		if(data){
-			var diffModel = new DiffModel(data);
-
-			if (editing) {
-				var addingController = new AddingController(
-					diffModel
-				);
-				var addingView = new AddingView(
-					diffModel,
-					addingController,
-					$(this)
-				);
-			}
-			else {
-				var timelineController = new TimelineController(
-					diffModel
-				);
-				var timelineView = new TimelineView(
-					diffModel,
-					timelineController,
-					$(this)
-				);
-			}
-		}
-		else{
-			console.log("ERROR, no data found for "+dataId)
-			$(this).remove();
-		}
-		
-		
+	}).fail(function(data){
+		throw new Error('Server error, PANIC!')
 	});
+
+	function renderEdit($ele, diffModel){
+		var addingController = new AddingController(
+			diffModel,
+			dataLoader
+		);
+		var addingView = new AddingView(
+			diffModel,
+			addingController,
+			$ele
+		);
+
+		$(addingController).on(Constants.EVENT_SAVE, renderStatic.bind(this, $ele, diffModel))
+	}
+	function renderStatic($ele, diffModel){
+		var timelineController = new TimelineController(
+			diffModel
+		);
+		var timelineView = new TimelineView(
+			diffModel,
+			timelineController,
+			$ele
+		);
+	}
 
 });

@@ -20,10 +20,14 @@ define(['./diff_view'], function(DiffView){
 		buttons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="sure">Sure</a></li>');
 		buttons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="unsure">Unsure</a></li>');
 
+		var adminButtons = $('<ul class="diff__buttons"></ul>');
+		adminButtons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="save">Save</a></li>');
+
 		var holder = $('<div>');
 		holder.append(orig);
 		holder.append(input);
 		holder.append(buttons);
+		holder.append(adminButtons);
 		holder.append(output);
 
 		this._$ele.append(holder);
@@ -43,6 +47,7 @@ define(['./diff_view'], function(DiffView){
 		$('[data-hook=looked]', this._$ele).on('click', this._diffController.addLookedUpHandler.bind(this._diffController));
 		$('[data-hook=sure]', this._$ele).on('click', this._diffController.addUnsureHandler.bind(this._diffController));
 		$('[data-hook=unsure]', this._$ele).on('click', this._diffController.addSureHandler.bind(this._diffController));
+		$('[data-hook=save]', this._$ele).on('click', this._diffController.saveHandler.bind(this._diffController));
 	}
 
 	return AddingView;

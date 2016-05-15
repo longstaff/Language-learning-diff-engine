@@ -5,6 +5,7 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 
 		this._origString;
 		this._diffs;
+		this._id;
 
 		this._calculatedString;
 		this._calculatedDecorators;
@@ -19,16 +20,27 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 		obj = obj || {};
 
 		this._origString = obj.string || '';
-		this._diffs = obj.diffArr || [];
+		this._diffs = obj.diffs || [{
+			diff:[{
+				value:this._origString
+			}],
+			type:init
+		}];
+		this._id = obj.id;
 
 		this._index = this._diffs.length + 1;
+	}
+
+	DiffModel.prototype.getId = function getId(){
+		return this._id;
 	}
 
 	DiffModel.prototype.getState = function getState(){
 		var obj = {};
 
 		obj.string = this._origString;
-		obj.diffArr = this._diffs;
+		obj.diffs = this._diffs;
+		obj.id = this._id;
 
 		return obj;
 	}
