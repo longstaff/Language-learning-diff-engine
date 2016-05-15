@@ -55,7 +55,7 @@ define(function(){
 	}
 
 	DiffView.prototype.addEvents = function(){
-		//$(document).on('keyup', this._diffController.addKeyboardNavHandler.bind(this._diffController));
+		this._$ele.on('keyup', this._diffController.addKeyboardNavHandler.bind(this._diffController));
 	}
 
 	return DiffView;
