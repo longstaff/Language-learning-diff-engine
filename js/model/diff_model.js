@@ -45,12 +45,15 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 		this.clearCalc();
 		this.emitEvent();
 	}
+	DiffModel.prototype.getIndex = function getIndex(){
+		return this._index;
+	}
 	DiffModel.prototype.nextIndex = function nextIndex(){
 		this.setIndex(Math.min(this._index + 1, this._diffs.length + 1));
 		return this._index;
 	}
 	DiffModel.prototype.prevIndex = function prevIndex(){
-		this.setIndex(this._index = Math.max(this._index - 1, 0));
+		this.setIndex(this._index = Math.max(this._index - 1, 1));
 		return this._index;
 	}
 

@@ -15,10 +15,10 @@ define(['./diff_view'], function(DiffView){
 		var input = $('<textarea class="diff_input" data-hook="diff-input">'+this._diffModel.getOrigString()+'</textarea>');
 		var output = $('<div class="diff_text" data-hook="diff-view">'+this._diffModel.getOrigString()+'</div>');
 
-		var buttons = $('<ul></ul>');
-		buttons.append('<li><a href="#" data-hook="looked">Looked up</a></li>');
-		buttons.append('<li><a href="#" data-hook="sure">Sure</a></li>');
-		buttons.append('<li><a href="#" data-hook="unsure">Unsure</a></li>');
+		var buttons = $('<ul class="diff__buttons"></ul>');
+		buttons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="looked">Looked up</a></li>');
+		buttons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="sure">Sure</a></li>');
+		buttons.append('<li class="diff__buttons__item"><a class="diff__buttons__link" href="#" data-hook="unsure">Unsure</a></li>');
 
 		var holder = $('<div>');
 		holder.append(orig);

@@ -120,6 +120,11 @@ textarea {
     right:0;
 }
 
+.diff{
+    display: block;
+    padding: 20px;
+}
+
 .diff_span{
     color:#1a1a1a;
 }
@@ -137,6 +142,81 @@ textarea {
     opacity: 0.3;
 }
 
+.diff__buttons{
+    margin:0;
+    padding: 0;
+}
+.diff__buttons__item{
+    display: inline-block;
+    margin: 0 10px;
+}
+.diff__buttons__link{
+    padding: 10px;
+    border:1px solid #000;
+    border-radius: 5px;
+    display: block;
+}
+
+.timeline{
+    padding: 10px 30px;
+    position: relative;
+    border:1px solid #000;
+    border-radius: 20px;
+    line-height: 0;
+}
+.timeline__list{
+    list-style: none;
+    padding: 0;
+}
+.timeline__list__item{
+    list-style: none;
+    margin:0 10px;
+    display: inline-block;
+    text-indent: -9999px;
+}
+.timeline__list__link{
+    display: block;
+    background: #000;
+    border-color: #000;
+    border-radius: 50%;
+    width:10px;
+    height:10px;
+}
+.timeline__list__link.timeline__list__link--active,
+.timeline__list__link--active{
+    border-style: solid;
+    border-width: 2px;
+    background: none;
+}
+.timeline__list__link--sure{
+    background: green;
+    border-color: green;
+}
+.timeline__list__link--unsure{
+    background: orange;
+    border-color: orange;
+}
+.timeline__list__link--lookup{
+    background: red;
+    border-color: red;
+}
+
+.timeline__nav{
+    list-style: none;
+}
+.timeline__nav__link{
+    position: absolute;
+    height:100%;
+    width: 20px;
+    top:0;
+    background: #ccc;
+}
+.timeline__nav__link--prev{
+    left:0;
+}
+.timeline__nav__link--next{
+    right:0;
+}
 
 /* ==========================================================================
    Helper classes

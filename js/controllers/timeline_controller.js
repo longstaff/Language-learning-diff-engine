@@ -11,7 +11,14 @@ define(['../constants/constants'], function(Constants){
 
 		this._diffModel.setIndex(index);
 	}
-	
+
+	TimelineController.prototype.clickedNext = function(ev){
+    	this._diffModel.nextIndex();
+    }
+	TimelineController.prototype.clickedPrev = function(ev){
+    	this._diffModel.prevIndex();
+    }
+
 	TimelineController.prototype.addKeyboardNavHandler = function(ev){
 	    ev.preventDefault();
 
