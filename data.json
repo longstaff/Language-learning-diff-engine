@@ -122,6 +122,26 @@
         {
             "id": 1,
             "string": "this is an editable string"
+        },
+        {
+            "string": "Edit me",
+            "id": 2
+        },
+        {
+            "string": "add",
+            "id": 3
+        },
+        {
+            "string": "add",
+            "id": 4
+        },
+        {
+            "string": "add",
+            "id": 5
+        },
+        {
+            "string": "Add another one",
+            "id": 6
         }
     ]
 }

@@ -13,9 +13,11 @@ define(['../constants/constants'], function(Constants){
 	}
 
 	TimelineController.prototype.clickedNext = function(ev){
+	    ev.preventDefault();
     	this._diffModel.nextIndex();
     }
 	TimelineController.prototype.clickedPrev = function(ev){
+	    ev.preventDefault();
     	this._diffModel.prevIndex();
     }
 

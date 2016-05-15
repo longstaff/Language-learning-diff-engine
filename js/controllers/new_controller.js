@@ -1,47 +1,20 @@
-define(['diff', '../constants/constants'], function(JsDiff, Constants){
+define(['../constants/constants'], function(Constants){
 	
 	function NewController(dataLoader){
 		this._dataLoader = dataLoader;
+		this._$diffInput;
 	}
 
 	NewController.prototype.setInput = function(diffInput){
 		this._$diffInput = diffInput;
-		this._diffTarget = this._$diffInput.val();
 	}
 
-	NewController.prototype.addLookedUpHandler = function(ev){
-		ev.preventDefault();
-		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
-		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_LOOKUP);
-		this.resetTarget();
-	}
-	NewController.prototype.addUnsureHandler = function(ev){
-		ev.preventDefault();
-		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
-		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_SURE);
-		this.resetTarget();
-	}
-	NewController.prototype.addSureHandler = function(ev){
-		ev.preventDefault();
-		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
-		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_UNSURE);
-		this.resetTarget();
-	}
+	NewController.prototype.saveHandler = function(){
+		$.when(this._dataLoader.newTranslation(this._$diffInput.val())).done(function(data){
+			$(this).trigger(Constants.EVENT_SAVE, data);
+		}.bind(this)).fail(function(){
 
-	NewController.prototype.addKeyboardNavHandler = function(ev){
-	    ev.preventDefault();
-
-		switch(ev.which) {
-	        case 37: // left
-	        	this._diffModel.prevIndex();
-	        break;
-
-	        case 39: // right
-	        	this._diffModel.nextIndex();
-	        break;
-
-	        default: return;
-	    }
+		}.bind(this));
 	}
 
 	NewController.prototype.resetTarget = function(){

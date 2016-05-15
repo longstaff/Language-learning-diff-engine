@@ -23,7 +23,7 @@
         else if(isset($_POST['string'])){
             $newTranslation = array(
                 'string' => $_POST['string'],
-                'id' => $jsonData['tranlations'].length
+                'id' => count($jsonData['tranlations'])
             );
             array_push( $jsonData['tranlations'], $newTranslation);
 
