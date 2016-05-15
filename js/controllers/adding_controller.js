@@ -1,4 +1,4 @@
-define(['../constants/constants'], function(Constants){
+define(['diff', '../constants/constants'], function(JsDiff, Constants){
 	
 	function AddingController(diffModel){
 		this._diffModel = diffModel;
