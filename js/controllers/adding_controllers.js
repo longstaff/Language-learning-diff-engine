@@ -5,8 +5,6 @@ define(['../constants/constants'], function(Constants){
 	}
 
 	AddingController.prototype.setInput = function(diffInput){
-		console.log(diffInput);
-
 		this._$diffInput = diffInput;
 		this._diffTarget = this._$diffInput.val();
 	}

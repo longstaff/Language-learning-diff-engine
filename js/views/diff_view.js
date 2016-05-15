@@ -6,8 +6,6 @@ define(function(){
 		this._$ele = $ele;
 		this._$diffEle;
 
-		console.log(this._diffModel);
-
 		this._diffModel.addListener(this.renderDiff.bind(this));
 
 		this.render();
@@ -43,8 +41,6 @@ define(function(){
 	}
 
 	DiffView.prototype.renderDiff = function(){
-
-		console.log("renderDiff")
 
 		var outputString = this._diffModel.getDiffString();
 		var outputDecorators = this._diffModel.getDiffDecorators();

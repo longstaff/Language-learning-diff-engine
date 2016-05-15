@@ -132,7 +132,7 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 		}
 
 		this._calculatedString = currentString;
-		this._calculatedDecorators = decorators;
+		this._calculatedDecorators = decorators.sort(function(a, b){return a.start - b.start});
 	}
 
 	function addDecoratorTo(decorators, type, start, length){
@@ -164,7 +164,9 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 				}
 			}
 			//Add the extras after to avoid looping issues.
-			arr = arr.concat(added);
+			for(var ii=0; ii<added.length; ii++){
+				arr.splice(arr.length, 0, added[ii]);
+			}
 		}
 		else {
 			//Removing padding
@@ -181,11 +183,6 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 					var length = (start + pad) - arr[ii].start;
 					arr[ii].start = start;
 					arr[ii].end = arr[ii].end - pad - length;
-
-					//If its less then remove this completely
-					if(arr[ii].end <= arr[ii].start){
-						remove.push(ii);
-					}
 				}
 				else if (arr[ii].end >= start && arr[ii].end >= start + pad){
 					//If its contained in the element, just remove the padding length
@@ -194,6 +191,11 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 				else if (arr[ii].end >= start){
 					//If its over element, just set to the start of the deletion
 					arr[ii].end = start;
+				}
+
+				//If its less then remove this completely
+				if(arr[ii].end <= arr[ii].start){
+					remove.push(ii);
 				}
 			}
 			for(var ii=0; ii<remove.length; ii++){
