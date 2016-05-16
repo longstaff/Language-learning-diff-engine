@@ -28,6 +28,7 @@ define(['./diff_view'], function(DiffView){
 
 	NewView.prototype.addEvents = function(){
 		$('[data-hook=save]', this._$ele).on('click', this._diffController.saveHandler.bind(this._diffController));
+		$('[data-hook=save]', this._$ele).on('click', this.render.bind(this));
 	}
 
 	return NewView;

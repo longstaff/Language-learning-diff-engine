@@ -14,9 +14,11 @@ define(['./diff_view'], function(DiffView){
 		var points = this._diffModel.getDiffs();
 
 		var timeline = $('<div class="timeline" data-hook="timeline-view">');
+		var orig = $('<div class="diff_text">'+this._diffModel.getOrigString()+'</div>');
 		var output = $('<div class="diff_text" data-hook="diff-view">'+this._diffModel.getOrigString()+'</div>');
 
 		var holder = $('<div>');
+		holder.append(orig);
 		holder.append(timeline);
 		holder.append(output);
 

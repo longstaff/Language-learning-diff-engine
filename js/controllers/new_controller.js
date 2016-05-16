@@ -11,7 +11,8 @@ define(['../constants/constants'], function(Constants){
 
 	NewController.prototype.saveHandler = function(){
 		$.when(this._dataLoader.newTranslation(this._$diffInput.val())).done(function(data){
-			$(this).trigger(Constants.EVENT_SAVE, data);
+			console.log("saveHandler");
+			$(this).trigger(Constants.EVENT_SAVE);
 		}.bind(this)).fail(function(){
 
 		}.bind(this));

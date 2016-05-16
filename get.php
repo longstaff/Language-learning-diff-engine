@@ -9,11 +9,45 @@
         
         $store = file_get_contents('data.json');
         $jsonData = json_decode($store, true);
+        $tranlations = $jsonData['tranlations'];
+
+        $complete = false;
+        $open = false;
+        if(isset($_POST['complete'])){
+            $complete = true;
+            $tranlations = $jsonData['tranlations'];
+            $tranlations = array_filter($tranlations, function($var){
+                return isset($var["diffs"]);
+            });
+            usort($tranlations, function ($a, $b){
+                return $a["difftime"] > $b["difftime"];
+            });
+        }
+        else if(isset($_POST['open'])){
+            $open = true;
+            $tranlations = $jsonData['tranlations'];
+            $tranlations = array_filter($tranlations, function($var){
+                return !isset($var["diffs"]);
+            });
+            usort($tranlations, function ($a, $b){
+                return $a["createdtime"] > $b["createdtime"];
+            });
+        }
 
         if(isset($_POST['id'])){
-            if($jsonData['tranlations'][$_POST['id']]){
+
+            $post;
+            foreach($jsonData['tranlations'] as $item){
+                if($item['id'] == $_POST['id']){
+                    $post = $item;
+                    break;
+                }
+            }
+
+            if($post){
                 $return['success'] = true;
-                $return['data'] = $jsonData['tranlations'][$_POST['id']];
+                $tranlations = $post;
+                $return['data'] = $tranlations;
             }
             else{
                 $return['success'] = false;
@@ -22,8 +56,19 @@
         }
         else{
             $idArr = array();
+
+            
             foreach($jsonData['tranlations'] as $item){
-                array_push($idArr, $item['id']);
+
+                if($complete && isset($item['diffs'])){
+                    array_push($idArr, $item['id']);
+                }
+                else if($open && !isset($item['diffs'])){
+                    array_push($idArr, $item['id']);
+                }
+                else if(!$complete && !$open){
+                    array_push($idArr, $item['id']);
+                }
             }
 
             $return['success'] = true;

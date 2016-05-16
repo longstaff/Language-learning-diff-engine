@@ -12,18 +12,21 @@ define(['diff', '../constants/constants'], function(JsDiff, Constants){
 
 	AddingController.prototype.addLookedUpHandler = function(ev){
 		ev.preventDefault();
+		this._diffModel.setCurrentString(this._$diffInput.val());
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_LOOKUP);
 		this.resetTarget();
 	}
 	AddingController.prototype.addUnsureHandler = function(ev){
 		ev.preventDefault();
+		this._diffModel.setCurrentString(this._$diffInput.val());
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_SURE);
 		this.resetTarget();
 	}
 	AddingController.prototype.addSureHandler = function(ev){
 		ev.preventDefault();
+		this._diffModel.setCurrentString(this._$diffInput.val());
 		var diff = JsDiff.diffWords(this._diffTarget, this._$diffInput.val());
 		this._diffModel.addDiff(diff, Constants.DIFF_TYPE_UNSURE);
 		this.resetTarget();
@@ -46,6 +49,7 @@ define(['diff', '../constants/constants'], function(JsDiff, Constants){
 	}
 
 	AddingController.prototype.saveHandler = function(){
+		this.stopTimer();
 		$.when(this._dataLoader.addDiffs(this._diffModel.getId(), this._diffModel.getDiffs())).done(function(data){
 			$(this).trigger(Constants.EVENT_SAVE);
 		}.bind(this)).fail(function(){
@@ -55,6 +59,26 @@ define(['diff', '../constants/constants'], function(JsDiff, Constants){
 
 	AddingController.prototype.resetTarget = function(){
 		this._diffTarget = this._$diffInput.val();
+	}
+
+	AddingController.prototype.startTimer = function(ev){
+		if(ev) ev.preventDefault();
+		this._diffModel.setActiveEditing(true);
+		this._timerCount = setTimeout(this.addSecond.bind(this), 1000);
+	}
+	AddingController.prototype.stopTimer = function(ev){
+		if(ev) ev.preventDefault();
+		clearTimeout(this._timerCount);
+		this._diffModel.setActiveEditing(false);
+	}
+
+	AddingController.prototype.addSecond = function(){
+		this._diffModel.addSecond();
+		this._timerCount = setTimeout(this.addSecond.bind(this), 1000);
+	}
+
+	AddingController.prototype.noopHandler = function(ev){
+		ev.preventDefault();
 	}
 
 	return AddingController;

@@ -6,9 +6,12 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 		this._origString;
 		this._diffs;
 		this._id;
+		this._currentTime;
+		this._active;
 
 		this._calculatedString;
 		this._calculatedDecorators;
+		this._currentString;
 
 		this.init(obj);
 	}
@@ -24,11 +27,20 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 			diff:[{
 				value:this._origString
 			}],
-			type:init
+			type:'init',
+			time:0
 		}];
 		this._id = obj.id;
 
 		this._index = this._diffs.length + 1;
+
+		this._currentString = this.getDiffString();
+
+		//Set the time to be last entry.
+		this._currentTime = this._diffs[this._diffs.length - 1].time;
+
+		//Disable active until toggled.
+		this._active = false;
 	}
 
 	DiffModel.prototype.getId = function getId(){
@@ -69,14 +81,33 @@ define(['../constants/constants', './base_model'], function(Constants, BaseModel
 		return this._index;
 	}
 
+	DiffModel.prototype.addSecond = function addSecond(){
+		this._currentTime = this._currentTime + 1;
+	}
+	DiffModel.prototype.setActiveEditing = function setActiveEditing(bool){
+		this._active = !!bool;
+		this.emitEvent();
+	}
+	DiffModel.prototype.getActiveEditing = function getActiveEditing(){
+		return this._active;
+	}
+
 	DiffModel.prototype.addDiff = function addDiff(diff, type){
 		this._diffs.push({
 			diff:diff,
-			type:type
+			type:type,
+			time:this._currentTime
 		});
 		this._index = this._diffs.length;
 		this.clearCalc();
 		this.emitEvent();
+	}
+
+	DiffModel.prototype.setCurrentString = function setCurrentString(string){
+		this._currentString = string;
+	}
+	DiffModel.prototype.getCurrentString = function getCurrentString(){
+		return this._currentString;
 	}
 
 	DiffModel.prototype.getDiffString = function getDiffString(){

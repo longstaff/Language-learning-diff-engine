@@ -4,13 +4,13 @@ require(['jquery', './constants/constants', './model/data_loader', './model/diff
 	var adminToken = $('[data-hook=admin_token]');
 	var isAdmin = adminToken.length > 0;
 
-	var dataLoader = new DataLoader(token.val(), '');
+	var dataLoader = new DataLoader(token.val(), isAdmin ? adminToken.val() : '');
 	token.remove();
 	adminToken.remove();
 
 	$page = $('[data-hook=page]');
 
-	$.when(dataLoader.getCompleteDataIds()).done(function(data){
+	$.when(dataLoader.getOpenDataIds()).done(function(data){
 
 		for(var ii=0; ii<data.length; ii++){
 
@@ -18,7 +18,7 @@ require(['jquery', './constants/constants', './model/data_loader', './model/diff
 			
 				var dataId = data[ii];
 				var $ele = $('<div class="diff" data-hook="diff-view" data-id="'+dataId+'"></div>')
-				$page.prepend($ele);
+				$page.append($ele);
 
 				$.when(dataLoader.getData(dataId)).done(function(data){
 
@@ -44,15 +44,21 @@ require(['jquery', './constants/constants', './model/data_loader', './model/diff
 		throw new Error('Server error, PANIC!')
 	});
 
-	function renderStatic($ele, diffModel){
-		var timelineController = new TimelineController(
-			diffModel
-		);
-		var timelineView = new TimelineView(
+	function renderEdit($ele, diffModel){
+		var addingController = new AddingController(
 			diffModel,
-			timelineController,
+			dataLoader
+		);
+		var addingView = new AddingView(
+			diffModel,
+			addingController,
 			$ele
 		);
+
+		$(addingController).on(Constants.EVENT_SAVE, renderStatic.bind(this, $ele, diffModel));
+	}
+	function renderStatic($ele, diffModel){
+		$ele.remove();
 	}
 
 });

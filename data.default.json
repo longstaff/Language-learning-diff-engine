@@ -1,0 +1,316 @@
+{
+    "tranlations": [
+        {
+            "id": 0,
+            "string": "this is a string",
+            "diffs": [
+                {
+                    "diff": [
+                        {
+                            "value": "this is a string"
+                        }
+                    ],
+                    "type": "init"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": 7,
+                            "value": "this is a string"
+                        },
+                        {
+                            "count": 4,
+                            "added": true,
+                            "value": " with changes"
+                        }
+                    ],
+                    "type": "sure"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": 2,
+                            "value": "this "
+                        },
+                        {
+                            "count": 4,
+                            "removed": true,
+                            "value": "is a "
+                        },
+                        {
+                            "count": 5,
+                            "value": "string with changes"
+                        }
+                    ],
+                    "type": "unsure"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": 2,
+                            "value": "this "
+                        },
+                        {
+                            "count": 1,
+                            "removed": true,
+                            "value": "string"
+                        },
+                        {
+                            "count": 1,
+                            "added": true,
+                            "value": "sentance"
+                        },
+                        {
+                            "count": 4,
+                            "value": " with changes"
+                        }
+                    ],
+                    "type": "unsure"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": 2,
+                            "value": "this "
+                        },
+                        {
+                            "count": 2,
+                            "added": true,
+                            "value": "a "
+                        },
+                        {
+                            "count": 5,
+                            "value": "sentance with changes"
+                        }
+                    ],
+                    "type": "lookup"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": 6,
+                            "value": "this a sentance "
+                        },
+                        {
+                            "count": 1,
+                            "removed": true,
+                            "value": "with"
+                        },
+                        {
+                            "count": 1,
+                            "added": true,
+                            "value": "that"
+                        },
+                        {
+                            "count": 1,
+                            "value": " "
+                        },
+                        {
+                            "count": 2,
+                            "added": true,
+                            "value": "had "
+                        },
+                        {
+                            "count": 1,
+                            "value": "changes"
+                        }
+                    ],
+                    "type": "sure"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "string": "this is an editable string",
+            "diffs": [
+                {
+                    "diff": [
+                        {
+                            "value": "this is an editable string"
+                        }
+                    ],
+                    "type": "init",
+                    "time": "0"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "8",
+                            "value": "this is an editable "
+                        },
+                        {
+                            "count": "1",
+                            "removed": "true",
+                            "value": "string"
+                        },
+                        {
+                            "count": "1",
+                            "added": "true",
+                            "value": "Sentance"
+                        }
+                    ],
+                    "type": "sure",
+                    "time": "8"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "6",
+                            "value": "this is an "
+                        },
+                        {
+                            "count": "1",
+                            "removed": "true",
+                            "value": "editable"
+                        },
+                        {
+                            "count": "1",
+                            "added": "true",
+                            "value": "changable"
+                        },
+                        {
+                            "count": "2",
+                            "value": " Sentance"
+                        }
+                    ],
+                    "type": "lookup",
+                    "time": "15"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "2",
+                            "value": "this "
+                        },
+                        {
+                            "count": "1",
+                            "removed": "true",
+                            "value": "is"
+                        },
+                        {
+                            "count": "1",
+                            "added": "true",
+                            "value": "was"
+                        },
+                        {
+                            "count": "1",
+                            "value": " "
+                        },
+                        {
+                            "count": "2",
+                            "removed": "true",
+                            "value": "an "
+                        },
+                        {
+                            "count": "3",
+                            "value": "changable Sentance"
+                        }
+                    ],
+                    "type": "unsure",
+                    "time": "21"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "5",
+                            "value": "this was changable"
+                        },
+                        {
+                            "count": "2",
+                            "removed": "true",
+                            "value": " Sentance"
+                        }
+                    ],
+                    "type": "sure",
+                    "time": "27"
+                }
+            ]
+        },
+        {
+            "string": "Edit me",
+            "id": 2
+        },
+        {
+            "string": "add",
+            "id": 3
+        },
+        {
+            "string": "add",
+            "id": 4
+        },
+        {
+            "string": "add",
+            "id": 5
+        },
+        {
+            "string": "Add another one",
+            "id": 6,
+            "diffs": [
+                {
+                    "diff": [
+                        {
+                            "value": "Add another one"
+                        }
+                    ],
+                    "type": "init",
+                    "time": "0"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "5",
+                            "value": "Add another one"
+                        },
+                        {
+                            "count": "2",
+                            "added": "true",
+                            "value": " sa"
+                        }
+                    ],
+                    "type": "sure",
+                    "time": "2"
+                },
+                {
+                    "diff": [
+                        {
+                            "count": "2",
+                            "value": "Add "
+                        },
+                        {
+                            "count": "1",
+                            "removed": "true",
+                            "value": "another"
+                        },
+                        {
+                            "count": "1",
+                            "added": "true",
+                            "value": "anothfsader"
+                        },
+                        {
+                            "count": "4",
+                            "value": " one sa"
+                        }
+                    ],
+                    "type": "lookup",
+                    "time": "4"
+                }
+            ]
+        },
+        {
+            "string": "asdasd",
+            "id": 7
+        },
+        {
+            "string": "asdasdsadasdasadsada",
+            "id": 8
+        },
+        {
+            "string": "asdas",
+            "id": 9
+        },
+        {
+            "string": "Added here!",
+            "id": 10
+        }
+    ]
+}

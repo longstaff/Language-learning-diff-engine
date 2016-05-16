@@ -5,14 +5,24 @@
     session_start();
 
     // Check a POST is valid.
-    if (isset($_POST['csrf_token']) && $_POST['csrf_token'] === $_SESSION['csrf_token']) {
+    if (isset($_POST['admin_token']) && $_POST['admin_token'] === $_SESSION['admin_token']) {
         
         $store = file_get_contents('data.json');
         $jsonData = json_decode($store, true);
 
         if(isset($_POST['id']) && isset($_POST['diffs'])){
-            if($jsonData['tranlations'][$_POST['id']]){
-                $jsonData['tranlations'][$_POST['id']]['diffs'] = $_POST['diffs'];
+
+            $index = -1;
+            for($i = 0; $i < count($jsonData['tranlations']); $i++){
+                if($jsonData['tranlations'][$i]['id'] == $_POST['id']){
+                    $index = $i;
+                    break;
+                }
+            }
+
+            if($index >= 0){
+                $jsonData['tranlations'][$i]['diffs'] = $_POST['diffs'];
+                $jsonData['tranlations'][$i]['difftime'] = time();
                 $return['success'] = true;
             }
             else{
@@ -23,7 +33,8 @@
         else if(isset($_POST['string'])){
             $newTranslation = array(
                 'string' => $_POST['string'],
-                'id' => count($jsonData['tranlations'])
+                'id' => uniqid(),
+                'createdtime' => time()
             );
             array_push( $jsonData['tranlations'], $newTranslation);
 
